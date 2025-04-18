@@ -74,7 +74,7 @@ const getAllEmployees = async (req, res) => {
           employeeId: row.employee_id,
           name: row.employee_name,
           department: row.department || "Unknown",
-          status: row.status || "active",
+          status: (row.status || "active").toLowerCase().trim(),
           email: row.email || "Unknown",
           phone: row.phone || "Unknown",
           address: row.address || "Unknown",
@@ -83,15 +83,15 @@ const getAllEmployees = async (req, res) => {
         };
       }
 
-      if (row.family_member_name) {
+      if (row.dependent_id) { // Ensure that dependent_id is not null
         acc[employeeId].family.push({
-          name: row.family_member_name,
-          relation: row.relation,
+          name: row.family_member_name || "Unknown", // Default to "Unknown" if family name is null
+          relation: row.relation || "Unknown", // Default to "Unknown" if relation is null
           dependentId: row.dependent_id,
-          status: row.family_status || "inactive", // Use family_status here
+          status: (row.family_status || "inactive").toLowerCase().trim(), // Default status to "inactive" if null
         });
       }
-
+      
       return acc;
     }, {});
 
