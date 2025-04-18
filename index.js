@@ -35,7 +35,11 @@ app.use(
   getAllEmployees
 );
 
-app.get(`/checkAccess`, getAccess);
+app.get(
+  `/checkAccess`,
+  authenticate,
+  authorizeRoles("Technician", "Admin", "Doctor", "Employee"),
+  getAccess);
 app.use(`/employee`, employeeRoutes);
 app.use(`/auth`, authRoutes);
 app.use(`/reports`, reportRoutes);
