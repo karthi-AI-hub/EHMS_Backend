@@ -20,6 +20,7 @@ db.reports_metadata = require("../models/reports_metadata")(sequelize, DataTypes
 db.report_instructions = require("../models/report_instructions")(sequelize, DataTypes);
 db.employee_allergies = require("../models/employee_allergies")(sequelize, DataTypes);
 db.employee_conditions = require("../models/employee_conditions")(sequelize, DataTypes);
+db.employee_clinicnotes = require("../models/employee_clinicnotes")(sequelize, DataTypes);
 
 // Sync Sequelize models
 const syncModels = async () => {

@@ -173,7 +173,7 @@ const updateEmployee = async (req, res) => {
         } else {
           // Add new member
           const relationCodes = { 
-            HUSBAND: 'HB', WIFE: 'WF', SON: 'SN', 
+            HUSBAND: 'HB', WIFE: 'WF', SON: 'SN', SISTER: "SI", BROTHER: "BR", 
             DAUGHTER: 'DT', MOTHER: 'MT', FATHER: 'FT', OTHER: 'O' 
           };
           
@@ -252,7 +252,7 @@ const addEmployee = async (req, res) => {
 
     // Process family members (if any)
     if (family_members?.length > 0) {
-      const relationCodes = { HUSBAND: "HB", WIFE: "WF", SON: "SN", DAUGHTER: "DT", MOTHER: "MT", FATHER: "FT", OTHER: "O" };
+      const relationCodes = { HUSBAND: "HB", WIFE: "WF", SON: "SN", DAUGHTER: "DT", MOTHER: "MT", FATHER: "FT", OTHER: "O", BROTHER: "BR", SISTER: "SI" };
 
       for (const member of family_members) {
         if (!member.name || !member.relation) {
@@ -340,7 +340,7 @@ const generateUniqueDependentId = async (connection, employeeId, relationCode) =
   const existingIds = existing.map(row => row.dependent_id);
   if (!existingIds.includes(baseId)) return baseId;
 
-  let maxIndex = 0;
+  let maxIndex = 1;
   for (let id of existingIds) {
     const match = id.match(new RegExp(`^${baseId}(\\d+)?$`));
     if (match && match[1]) {
