@@ -1,5 +1,3 @@
-const { all } = require("../routes/reportRoutes");
-
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define(
         "users",
@@ -39,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             created_at: {
                 type: DataTypes.DATE,
-                defaultValue: DataTypes.NOW,
+                allowNull: true,
             },
             last_login: {
                 type: DataTypes.DATE,
@@ -51,18 +49,39 @@ module.exports = (sequelize, DataTypes) => {
             },
             first_login: {
                 type: DataTypes.BOOLEAN,
+                allowNull: true,
                 defaultValue: true,
             },
             status: {
                 type: DataTypes.STRING(50),
                 allowNull: true,
-              },
+            },
+            refer_hospital: {
+                type: DataTypes.BOOLEAN,
+                allowNull: true,
+                defaultValue: false,
+            },
+            blood: {
+                type: DataTypes.STRING(5),
+                allowNull: true,
+            },
+            dob: {
+                type: DataTypes.DATE,
+                allowNull: true,
+            },
         },
         {
             tableName: "users",
             timestamps: false,
         }
     );
+
+    Users.associate = (models) => {
+        Users.hasMany(models.family_members, {
+            foreignKey: "employee_id",
+            as: "family",
+        });
+    };
 
     return Users;
 };

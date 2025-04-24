@@ -99,38 +99,38 @@ const fetchReport = async (req, res) => {
     if (!employeeId) {
       return res.status(400).json({ message: "Employee ID is required." });
     }
-
+    
     // Check if employeeId exists in users or family_members table
-    const userExists = await db.users.findOne({ where: { employee_id: employeeId } });
-    const familyMemberExists = await db.family_members.findOne({ where: { dependent_id: employeeId } });
+    const userExists = await db.users?.findOne({ where: { employee_id: employeeId } });
+    const familyMemberExists = await db.family_members?.findOne({ where: { dependent_id: employeeId } });
 
     if (!userExists && !familyMemberExists) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         message: "Employee/Dependent not found",
-        code: "USER_NOT_FOUND" 
+        code: "USER_NOT_FOUND",
       });
     }
 
     // Fetch reports for the given ID
-    const reports = await db.reports_metadata.findAll({
+    const reports = await db.reports_metadata?.findAll({
       where: { employee_id: employeeId, is_deleted: false },
     });
 
-    if (reports.length === 0) {
-      return res.status(200).json({ 
+    if (!reports || reports.length === 0) {
+      return res.status(200).json({
         message: "No reports found for this employee/dependent",
         code: "NO_REPORTS",
-        reports: [] 
+        reports: [],
       });
     }
 
     res.status(200).json(reports);
   } catch (error) {
     console.error("Error fetching reports:", error);
-    res.status(500).json({ 
-      message: "Failed to fetch reports.", 
+    res.status(500).json({
+      message: "Failed to fetch reports.",
       error: error.message,
-      code: "SERVER_ERROR"
+      code: "SERVER_ERROR",
     });
   }
 };

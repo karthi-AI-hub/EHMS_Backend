@@ -26,18 +26,33 @@ module.exports = (sequelize, DataTypes) => {
             },
             created_at: {
                 type: DataTypes.DATE,
-                defaultValue: DataTypes.NOW,
+                allowNull: true,
             },
             status: {
                 type: DataTypes.STRING(50),
                 allowNull: true,
-                defaultValue: 'ACTIVE'
+            },
+            blood: {
+                type: DataTypes.STRING(5),
+                allowNull: true,
+            },
+            dob: {
+                type: DataTypes.DATE,
+                allowNull: true,
             },
         },
         {
+            tableName: "family_members",
             timestamps: false,
         }
     );
+
+    FamilyMembers.associate = (models) => {
+        FamilyMembers.belongsTo(models.users, {
+            foreignKey: "employee_id",
+            as: "employee",
+        });
+    };
 
     return FamilyMembers;
 };

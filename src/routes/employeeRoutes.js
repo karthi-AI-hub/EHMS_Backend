@@ -5,6 +5,7 @@ const {
   addEmployee,
   getFamilyMembers,
   getAccess,
+  getAllEmployeesWithMedicalData,
 } = require("../controllers/employeeController");
 const {
   authenticate,
@@ -13,6 +14,12 @@ const {
 
 const router = express.Router();
 
+router.get(
+  "/getAllEmployeesWithMedicalData",
+  authenticate,
+  authorizeRoles("Admin", "Doctor", "Technician"),
+  getAllEmployeesWithMedicalData
+)
 router.get(
   "/:employeeId",
   authenticate,

@@ -22,7 +22,13 @@ db.employee_allergies = require("../models/employee_allergies")(sequelize, DataT
 db.employee_conditions = require("../models/employee_conditions")(sequelize, DataTypes);
 db.employee_clinicnotes = require("../models/employee_clinicnotes")(sequelize, DataTypes);
 
-// Sync Sequelize models
+// Call associate methods after all models are initialized
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
+
 const syncModels = async () => {
     try {
         await sequelize.sync({ alter: false }); // Disable altering existing tables
@@ -32,11 +38,5 @@ const syncModels = async () => {
     }
 };
 
-Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db);
-    }
-  });
-  
 // Export the Sequelize instance, models, and sync function
 module.exports = { ...db, syncModels };
