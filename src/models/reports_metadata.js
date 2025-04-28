@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             uploaded_at: {
                 type: DataTypes.DATE,
                 allowNull: true,
+                defaultValue: DataTypes.NOW
             },
             is_deleted: {
                 type: DataTypes.BOOLEAN,

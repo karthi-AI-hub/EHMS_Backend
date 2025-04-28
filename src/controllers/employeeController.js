@@ -381,7 +381,7 @@ const getAllEmployeesWithMedicalData = async (req, res) => {
   try {
     // 1. Fetch employees with their family members
     const employees = await db.users.findAll({
-      attributes: ['employee_id', 'name', 'department', 'status'],
+      attributes: ['employee_id', 'name', 'department', 'status', 'dob', 'blood', 'email', 'phone', 'address', 'role'],
       include: [{
         model: db.family_members,
         as: 'family',

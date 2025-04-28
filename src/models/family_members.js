@@ -21,23 +21,26 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             relation: {
-                type: DataTypes.ENUM("HUSBAND", "WIFE", "SON", "DAUGHTER", "MOTHER", "FATHER", "OTHER"),
+                type: DataTypes.STRING(25),
                 allowNull: false,
-            },
+                defaultValue: "OTHER" 
+              },
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: true,
+                defaultValue: DataTypes.NOW
             },
             status: {
                 type: DataTypes.STRING(50),
                 allowNull: true,
+                defaultValue: 'ACTIVE'
             },
             blood: {
                 type: DataTypes.STRING(5),
                 allowNull: true,
             },
             dob: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: true,
             },
         },

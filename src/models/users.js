@@ -38,10 +38,12 @@ module.exports = (sequelize, DataTypes) => {
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: true,
-            },
+                defaultValue: DataTypes.NOW
+              },
             last_login: {
                 type: DataTypes.DATE,
                 allowNull: true,
+                defaultValue: DataTypes.NOW
             },
             department: {
                 type: DataTypes.STRING(100),
@@ -66,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true,
             },
             dob: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: true,
             },
         },
